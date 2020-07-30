@@ -1,0 +1,52 @@
+
+    {% if admin %}
+    {% extends "adminLayout.html" %}
+    {% else %}
+    {% extends "visitLayout.html" %}  
+    {% endif %}
+
+    {% block content %}
+
+    <section class="contact-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">מחיקת פארק</h2>
+                    </div>
+                    <div class="col-lg-8">
+                      {% for mess in get_flashed_messages() %}
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{mess}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      {% endfor %}
+
+                        <form class="form-contact contact_form" method="post" action="">
+                          {{ form.hidden_tag() }}
+                          {{form.csrf_token}}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.parkName.label }}{{ form.parkName(class="form-control valid") }}
+                                        <!-- <input class="form-control valid" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'הכנס שם לפארק'" placeholder="שם הפארק"> -->
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form.parkAddress.label }}{{ form.parkAddress(class="form-control valid") }}
+                                        <!-- <input class="form-control valid" name="address" id="address" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'הכנס את כתובת הפארק'" placeholder="כתובת"> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <!-- <button type="submit" class="button button-contactForm boxed-btn">צור פארק</button> -->
+                                {{ form.submit(class="button button-contactForm boxed-btn") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endblock content %}

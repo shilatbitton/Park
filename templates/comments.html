@@ -1,0 +1,87 @@
+
+{% if admin %}
+{% extends "adminLayout.html" %}
+{% else %}
+{% extends "visitLayout.html" %}  
+{% endif %}
+
+{% block content %}
+<form method=POST enctype = "multipart/form-data">
+    {{form.hidden_tag()}}
+    {{ JSGlue.include() }}
+<div style="padding: 10px;text-align: center;">
+    <h1 id="parkName">{{parkName}}</h1>
+    <div dir="rtl" style="flex-direction:row;display: flex;justify-content: center">
+        <a style="margin-left: 20px;">ממוצע הפארק:</a>
+        <a>{{ret}}</a>
+    </div>
+    <div style="padding: 10px;text-align: center;justify-content: center;display: flex;" >
+        <div class="card" style="width: 18rem; text-align: center;">
+              <div class="card-header">
+                <h3>מתקנים</h3>
+              </div>
+                <ul class="list-group list-group-flush">
+                        {% for i in parkFacility %}
+                            <li class="list-group-item">{{ i }}</li>
+                        {% endfor %}
+                </ul>
+        </div>
+    </div>
+    {% for c in comments %}
+        <div dir="rtl" style="background-color: white;width: 700px;margin: auto;margin-top: 10px;">
+            <div style="flex-direction:row;display: flex;">
+                <h1 style="font-size:large;">{{c['first']}} {{c['last']}}</h1>
+                <div style="border-right: 2px solid blue;"></div>
+                <h1 style="font-size:large;text-align: center;margin-right: 200px;">{{c['text']}}</h1>
+                {% if c['image'] %}
+                <img src={{c['image']}} width="150" height="150"> 
+                {% endif %}
+            {% if admin or now==c['userId'] %}
+                <a href="{{url_for('delete_comments',post_id=c['post_id'])}}" style="color: red;margin-right: 20px;">מחק</a>
+            {% endif %}
+            {% if now==c['userId'] %}
+                <a href="{{url_for('update_comments',post_id=c['post_id'],text=c['text'])}}" style="color: blue;margin-right: 20px;">עדכן</a>
+            {% endif %}
+            </div>
+            <div>
+                <h1 style="font-size:large;">{{c['date']}}</h1>
+            </div>
+        </div>
+    {% endfor %}
+    {{form.comment( rows="4",cols="50",dir="rtl",style="margin-top: 10px;")}}
+    
+</div>
+    {% if rat %}
+    <div dir="rtl" style="flex-direction:row;display: flex;justify-content: center">
+        <a style="margin-left: 20px;">דרג פארק</a>
+        {{form.stars(style="flex-direction:row;display: flex;justify-content: center;")}}
+        <button type="button" onclick="myFunction()">דרג</button>
+        <!-- <a href="myFunction()" style="margin-right: 20px;color: blue;">דרג</a> -->
+    </div>
+    {% endif %}
+<div style="justify-content: center;display: flex;align-items: center;">
+    <input type=file name=file>
+    {{form.submit(style="color: #8fd7fc;background-color: white;border: none;cursor: pointer;")}}
+    <!-- <button style="color: #8fd7fc;background-color: white;border: none;cursor: pointer;">הוסף תגובה</button> -->
+</div>
+
+</form>
+
+<script>
+    function myFunction() {
+        var radios = document.getElementsByName('stars');
+
+for (var i = 0, length = radios.length; i < length; i++) {
+  if (radios[i].checked) {
+    // do whatever you want with the checked radio
+     $.post(Flask.url_for('rating', {p:document.getElementById("parkName").innerText,r:radios[i].value}));
+    alert(document.getElementById("parkName").innerText);
+
+    // only one radio can be logically checked, don't check the rest
+    break;
+  }
+}
+    }
+    </script>
+{% endblock content %}
+

@@ -1,0 +1,25 @@
+<!--we can see here the page that show comments-->
+{% extends "layout.html" %}
+<br>
+<br>
+{% block content %}
+<br>
+<br>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/main2.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main2.css') }}">
+<br>
+<img class="imgg" src="static/images/peo.jpg" display="block" >
+<br>
+Users
+    {% for guest in guests %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            </div>
+            <h2><a class="article-title" href="{{ url_for('Option_guest',email=guest.to_dict()['email']) }}">{{ guest.to_dict()['email'] }}</a></h2>
+            <p class="article-content">{{ guest.to_dict()['name']  }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

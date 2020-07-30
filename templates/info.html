@@ -1,0 +1,51 @@
+
+{% if admin %}
+{% extends "adminLayout.html" %}
+{% else %}
+{% extends "visitLayout.html" %}
+{% endif %}
+
+{% block content %}
+    <form style="display: flex; flex-direction: column; align-items: center;" method="POST" action="">
+        <table>
+          <tr style="border: 1px solid black;">
+            <th style="border: 1px solid black;">Name</th>
+            <th style="border: 1px solid black;">Email</th>
+            <th style="border: 1px solid black;">Job</th>
+            {% if admin %}
+            <th style="border: 1px solid black;">Delete</th>
+            {% endif %}
+          </tr>
+          {% for info_item in info_items %}
+            <tr style="border: 1px solid black;">
+              <td style="border: 1px solid black;">{{info_item['name']}}</td>
+              <td style="border: 1px solid black;">{{info_item['email']}}</td>
+              <td style="border: 1px solid black;">{{info_item['job']}}</td>
+              <td style="border: 1px solid black;">
+                {% if admin %}
+                    <a href="{{url_for('delete_info_item',info_item_id=info_item['id'])}}" style="color: red;margin-right: 20px;">מחק</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% if admin %}
+        <div class="form-row" style="width: 300px; display: flex;flex-direction: column; align-items: center;">
+          <div class="form-group" style="text-align: right;">
+            {{form.name.label}}
+            {{form.name(class="form-control")}}
+          </div>
+          <div class="form-group" style="text-align: right;">
+            {{form.email.label}}
+            {{form.email(class="form-control")}}
+          </div>
+          <div class="form-group" style="text-align: right;">
+            {{form.job.label}}
+            {{form.job(class="form-control")}}
+          </div>
+        </div>
+
+        {{form.submit(class="btn btn-primary") }}
+      {% endif %}
+    </form>
+{% endblock content %}

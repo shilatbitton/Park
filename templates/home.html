@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form class="login100-form validate-form" method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{form.csrf_token}}
+        {{form.submit(class="login100-form-btn")}}
+    </form>
+</body>
+</html>

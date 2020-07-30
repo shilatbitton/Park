@@ -1,0 +1,13 @@
+{% extends "adminLayout.html" %}
+
+{% block content %}
+<div style="padding: 10px;">
+    {% for i in data %}
+        <a href="{{url_for('review',p=i['Name'])}}">
+            <button style="height:50px;width: 500px;cursor: pointer;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);border: none;display:list-item;background-color:rgb(248, 241, 241);border-radius: 10px;margin:auto;margin-top: 10px;text-decoration: none;">
+                <h1 style="text-align: center;">{{i['Name']}}</h1>
+            </button>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}

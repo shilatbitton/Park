@@ -1,0 +1,25 @@
+<!--we can see here the page that show comments-->
+{% extends "layout.html" %}
+<br>
+<br>
+{% block content %}
+<br>
+<br>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/main2.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main2.css') }}">
+<br>
+<img class="imgg" src="static/images/gdoly_isreal.jpg" display="block" >
+<br>
+Comments
+    {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            </div>
+            <h2><a class="article-title" href="{{ url_for('Comment_guest', post_id=1) }}">{{ post.to_dict()['title'] }}</a></h2>
+            <p class="article-content">{{ post.to_dict()['content'] }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
